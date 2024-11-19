@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	height: 100vh;
+	font-family: "Inter", sans-serif;
+}
+
+a, a:hover, a:visited {
+	color: inherit;
+	text-decoration: initial;
+}
+
+#root {
+	min-height: 100%;
+}
+
+input, button, code {
+	font-family: "JetBrains Mono", monospace;
+}
