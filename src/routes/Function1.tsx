@@ -3,6 +3,8 @@ import Discovering from "../Discovering";
 import WalletSelector from "./WalletSelector";
 import Loading from "../Loading";
 import TimePeriodSelector from "../TimePeriodSelector";
+import TimePeriod from "../TimePeriod";
+import AddressSelector from "../AddressSelector";
 
 const STEP_INFO = [
 	{
@@ -11,11 +13,20 @@ const STEP_INFO = [
 	{
 		name: "Step 2. Configure Time Period",
 	},
+	{
+		name: "Step 3. Supply Wallet Addresses"
+	},
+	{
+		type: "loading",
+		name: "Fetching information from blockchain...",
+	},
 ];
 
 export default () => {
 	const [step, setStep] = createSignal(0);
 	const [wallet, setWallet] = createSignal();
+	const [period, setPeriod] = createSignal();
+	const [addresses, setAddresses] = createSignal();
 	const stepInfo = () => STEP_INFO[step()];
 
 	return <>
@@ -43,6 +54,9 @@ export default () => {
 					<Loading/>
 					<br/>
 				</Show>
+				<button onClick={() => window.location.reload()} class="bg-gray-200 border border-gray-400 px-3 py-1 hover:bg-gray-300 float-right">
+					Start Over
+				</button>
 				<br/>
 				<Show when={step() === 0}>
 					<p class="font-bold"> Discovering EIP-6963 Wallets... </p>
@@ -51,8 +65,6 @@ export default () => {
 					<WalletSelector onSelect={(wallet) => {
 						setWallet(wallet);
 						setStep(1);
-
-
 					}}/>
 					<br/>
 					<Discovering/>
@@ -66,11 +78,26 @@ export default () => {
 						Thank you for connecting to your wallet!
 					</p>
 					<p>
-						Now, you must choose the time period for which the statement should be generated..
+						Now, you must choose the time period for which the statement should be generated.
 					</p>
 					<br/>
-					<TimePeriodSelector/>
+					<TimePeriodSelector onComplete={(period) => {
+						setPeriod(period);
+						setStep(2);
+					}}/>
 					<br/>
+				</Show>
+				<Show when={step() === 2}>
+					<p> You have selected the following time period. </p>
+					<br/>
+					<TimePeriod period={period()}/>
+					<br/>
+					<p> It remains to supply all the wallet addresses under your control that should form part of the statement. </p>
+					<br/>
+					<AddressSelector onComplete={(addresses) => {
+						setAddresses(addresses);
+						setStep(3);
+					}}/>
 				</Show>
 			</div>
 		</div>

@@ -6,7 +6,7 @@ import MonthSelector from "./MonthSelector";
 import TimezoneSelector from "./TimezoneSelector";
 
 export default (props) => {
-	const [range, setRange] = createSignal("weekly");
+	const [range, setRange] = createSignal("daily");
 	const [timezone, setTimezone] = createSignal("Europe/Dublin");
 
 	return <>
@@ -26,7 +26,7 @@ export default (props) => {
 			</div>
 		</div>
 		<Show when={range() === "daily"}>
-			<DaySelector timezone={timezone} onComplete={({ start, end }) => {
+			<DaySelector onComplete={({ start, end }) => {
 				props?.onComplete?.({
 					range: "daily",
 					start,
@@ -35,7 +35,7 @@ export default (props) => {
 			}} />
 		</Show>
 		<Show when={range() === "weekly"}>
-			<WeekSelector timezone={timezone}  onComplete={({ start, end }) => {
+			<WeekSelector onComplete={({ start, end }) => {
 				props?.onComplete?.({
 					range: "weekly",
 					start,
@@ -44,7 +44,7 @@ export default (props) => {
 			}} />
 		</Show>
 		<Show when={range() === "monthly"}>
-			<MonthSelector timezone={timezone} onComplete={({ start, end }) => {
+			<MonthSelector onComplete={({ start, end }) => {
 				props?.onComplete?.({
 					range: "monthly",
 					start,
