@@ -1,4 +1,4 @@
-import { createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 
 const formatTimezone = (timezone: string) => {
 	const now = new Date();
@@ -10,10 +10,7 @@ const formatTimezone = (timezone: string) => {
 
 	const formatter = new Intl.DateTimeFormat("en-US", options);
 	const parts = formatter.formatToParts(now);
-
-	// Extract UTC offset
 	const offset = parts.find((p) => p.type === "timeZoneName");
-
 	return offset ? `${timezone} (${offset.value})` : timezone;
 };
 
@@ -23,6 +20,11 @@ export default (props) => {
 
 	onMount(() => {
 		setTimezones(Intl.supportedValuesOf("timeZone"));
+	});
+
+	createEffect(() => {
+		const timezone = selectedTimezone();
+		props?.onChange?.(timezone);
 	});
 
 	return <>

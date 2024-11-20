@@ -7,10 +7,11 @@ import TimezoneSelector from "./TimezoneSelector";
 
 export default (props) => {
 	const [range, setRange] = createSignal("weekly");
+	const [timezone, setTimezone] = createSignal("Europe/Dublin");
 
 	return <>
 		<div class="border-2 border-gray px-4 py-2 inline-block">
-			<TimezoneSelector/>
+			<TimezoneSelector onChange={(timezone) => setTimezone(timezone)}/>
 		</div>
 		<br/><br/>
 		<div class="flex">
@@ -25,7 +26,7 @@ export default (props) => {
 			</div>
 		</div>
 		<Show when={range() === "daily"}>
-			<DaySelector onComplete={({ start, end }) => {
+			<DaySelector timezone={timezone} onComplete={({ start, end }) => {
 				props?.onComplete?.({
 					range: "daily",
 					start,
@@ -34,7 +35,7 @@ export default (props) => {
 			}} />
 		</Show>
 		<Show when={range() === "weekly"}>
-			<WeekSelector onComplete={({ start, end }) => {
+			<WeekSelector timezone={timezone}  onComplete={({ start, end }) => {
 				props?.onComplete?.({
 					range: "weekly",
 					start,
@@ -43,7 +44,7 @@ export default (props) => {
 			}} />
 		</Show>
 		<Show when={range() === "monthly"}>
-			<MonthSelector onComplete={({ start, end }) => {
+			<MonthSelector timezone={timezone} onComplete={({ start, end }) => {
 				props?.onComplete?.({
 					range: "monthly",
 					start,
