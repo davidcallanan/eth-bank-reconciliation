@@ -14,7 +14,7 @@ body {
 	font-family: "Inter", sans-serif;
 }
 
-a, a:hover, a:visited {
+:where(a, a:hover, a:visited) {
 	color: inherit;
 	text-decoration: initial;
 }

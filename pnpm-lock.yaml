@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@solidjs/router':
+        specifier: ^0.15.1
+        version: 0.15.1(solid-js@1.8.11)
       solid-js:
         specifier: ^1.8.11
         version: 1.8.11
@@ -551,6 +554,11 @@ packages:
     resolution: {integrity: sha512-11ypVbp987XxETeRqY5Y3OmmTpm8/jZqJXRvo6AyqBthzkvvjEdReuUMU2yVb+pwWGxfZpWHZ6EUCcGXUMhfwg==}
     peerDependencies:
       solid-js: ^1.6.12
+
+  '@solidjs/router@0.15.1':
+    resolution: {integrity: sha512-lb5BRBqQqii/1dQCglx2K68xLkgu7QcrcajWKuuEx6FHTsK/hp5IgVhjy6RzPMLj+SFyrrRi/ldirCFNxtzh0Q==}
+    peerDependencies:
+      solid-js: ^1.8.6
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -1692,6 +1700,10 @@ snapshots:
     dependencies:
       solid-js: 1.8.11
 
+  '@solidjs/router@0.15.1(solid-js@1.8.11)':
+    dependencies:
+      solid-js: 1.8.11
+
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.22.5
@@ -2066,8 +2078,9 @@ snapshots:
   postcss-load-config@4.0.2(postcss@8.4.40):
     dependencies:
       lilconfig: 3.1.2
-      postcss: 8.4.40
       yaml: 2.5.0
+    optionalDependencies:
+      postcss: 8.4.40
 
   postcss-nested@6.2.0(postcss@8.4.40):
     dependencies:
@@ -2152,6 +2165,7 @@ snapshots:
       '@solid-devtools/debugger': 0.23.3(solid-js@1.8.11)
       '@solid-devtools/shared': 0.13.1(solid-js@1.8.11)
       solid-js: 1.8.11
+    optionalDependencies:
       vite: 5.0.11
     transitivePeerDependencies:
       - supports-color
@@ -2291,7 +2305,7 @@ snapshots:
       fsevents: 2.3.3
 
   vitefu@0.2.5(vite@5.0.11):
-    dependencies:
+    optionalDependencies:
       vite: 5.0.11
 
   which@2.0.2:

@@ -1,4 +1,4 @@
-# Ethereum Bank Reconciliation
+# EVM Bank Reconciliation
 
 This is a proof-of-concept web application that allows users to perform the analog of bank reconciliation in Ethereum.
 
