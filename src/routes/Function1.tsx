@@ -2,7 +2,7 @@ import { createSignal, Show } from "solid-js";
 import Discovering from "../Discovering";
 import WalletSelector from "./WalletSelector";
 import Loading from "../Loading";
-import TimePeriodSelector from "./TimePeriodSelector";
+import TimePeriodSelector from "../TimePeriodSelector";
 
 const STEP_INFO = [
 	{
