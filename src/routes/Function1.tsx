@@ -5,6 +5,7 @@ import Loading from "../Loading";
 import TimePeriodSelector from "../TimePeriodSelector";
 import TimePeriod from "../TimePeriod";
 import AddressSelector from "../AddressSelector";
+import { fetchBlockchainTransactions } from "../fetchBlockchainTransactions";
 
 const STEP_INFO = [
 	{
@@ -26,8 +27,21 @@ export default () => {
 	const [step, setStep] = createSignal(0);
 	const [wallet, setWallet] = createSignal();
 	const [period, setPeriod] = createSignal();
-	const [addresses, setAddresses] = createSignal();
+	const [progress, setProgress] = createSignal(0);
+	const [addresses, setAddresses] = createSignal(new Set());
 	const stepInfo = () => STEP_INFO[step()];
+
+	const fetchBlockchainData = async () => {
+		const options = {
+			period: period(),
+			addresses: Array.from(addresses()),
+			wallet: wallet(),
+			setProgress,
+		};
+
+		const result = await fetchBlockchainTransactions(options);
+		console.log(result);
+	};
 
 	return <>
 		<div class="container mx-auto">
@@ -97,7 +111,12 @@ export default () => {
 					<AddressSelector onComplete={(addresses) => {
 						setAddresses(addresses);
 						setStep(3);
+						fetchBlockchainData();
 					}}/>
+				</Show>
+				<Show when={step() === 3}>
+					<p> Progress: <b>{(progress() * 100).toFixed(0)}%</b></p>
+					<p> Please, be patient. This may take a while... </p>
 				</Show>
 			</div>
 		</div>

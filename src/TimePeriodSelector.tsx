@@ -28,6 +28,7 @@ export default (props) => {
 		<Show when={range() === "daily"}>
 			<DaySelector onComplete={({ start, end }) => {
 				props?.onComplete?.({
+					timezone: timezone(),
 					range: "daily",
 					start,
 					end,

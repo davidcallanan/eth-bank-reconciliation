@@ -14,6 +14,9 @@ export default () => {
 					A reconciliation report can then be downloaded. The information in this report
 					can be used to make the necessary adjustments to your internal accounts.
 				</p>
+				<br/>
+				<br/>
+				<h1> Function 2 is currently being developed. Please check back at a later date. </h1>
 			</div>
 		</div>
 	</>;
