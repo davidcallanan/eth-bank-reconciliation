@@ -21,7 +21,7 @@ const Index: Component = () => {
 							to your EVM wallet provider and select any ERC20 token of interest.
 							You can then supply as many wallet addresses as you like and choose
 							a time period for which the statement should be generated.
-							The statement can be downloaded or can be brought to "Function 2" directly.
+							The statement can then be downloaded or can be brought to "Function 2" directly.
 						</p>
 					</div>
 				</a>
