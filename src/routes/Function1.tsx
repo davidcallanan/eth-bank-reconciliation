@@ -1,16 +1,22 @@
 import { createSignal, Show } from "solid-js";
 import Discovering from "../Discovering";
 import WalletSelector from "./WalletSelector";
+import Loading from "../Loading";
+import TimePeriodSelector from "./TimePeriodSelector";
 
 const STEP_INFO = [
 	{
 		name: "Step 1. Connect to Wallet Provider",
 	},
+	{
+		name: "Step 2. Configure Time Period",
+	},
 ];
 
 export default () => {
-	const [step, setStep] = createSignal(1);
-	const stepInfo = () => STEP_INFO[step() - 1];
+	const [step, setStep] = createSignal(0);
+	const [wallet, setWallet] = createSignal();
+	const stepInfo = () => STEP_INFO[step()];
 
 	return <>
 		<div class="container mx-auto">
@@ -28,15 +34,43 @@ export default () => {
 					The statement can then be downloaded or can be brought to "Function 2" directly.
 				</p>
 				<br/>
-				<h2 class="text-white text-center px-2 py-1 bg-green-600 font-bold text-lg"> {stepInfo().name} </h2>
-				<br/>
-				<Show when={step() === 1}>
-					<p class="font-bold"> Discovering EIP-6963 Wallets... </p>
-					<p> Can't find your wallet? Ensure you have an Ethereum wallet such as <a href="https://metamask.io/" target="_blank">MetaMask</a> correctly installed on your web browser. </p>
+				<Show when={stepInfo().type !== "loading"}>
+					<h2 class="text-white text-center px-2 py-1 bg-green-600 font-bold text-lg"> {stepInfo().name} </h2>
+				</Show>
+				<Show when={stepInfo().type === "loading"}>
+					<h2 class="text-center px-2 py-1 bg-white border-4 border-green-600 font-bold text-lg"> {stepInfo().name} </h2>
 					<br/>
-					<WalletSelector/>
+					<Loading/>
+					<br/>
+				</Show>
+				<br/>
+				<Show when={step() === 0}>
+					<p class="font-bold"> Discovering EIP-6963 Wallets... </p>
+					<p> Can't find your wallet? Ensure you have an Ethereum wallet such as <a class="text-blue-800 hover:underline" href="https://metamask.io/" target="_blank">MetaMask</a> installed correctly on your web browser. </p>
+					<br/>
+					<WalletSelector onSelect={(wallet) => {
+						setWallet(wallet);
+						setStep(1);
+
+
+					}}/>
 					<br/>
 					<Discovering/>
+				</Show>
+				<Show when={step() === 1}>
+					<div class="flex">
+						<img src={wallet().info.icon} class="w-8 h-8 mr-4"/>
+						<p class="text-xl font-bold"> Connected to {wallet().info.name} </p>
+					</div>
+					<p>
+						Thank you for connecting to your wallet!
+					</p>
+					<p>
+						Now, you must choose the time period for which the statement should be generated..
+					</p>
+					<br/>
+					<TimePeriodSelector/>
+					<br/>
 				</Show>
 			</div>
 		</div>

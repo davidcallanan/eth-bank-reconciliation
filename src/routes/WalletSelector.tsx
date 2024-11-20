@@ -3,7 +3,7 @@
 
 import { createSignal, For, onCleanup, onMount } from "solid-js";
 
-export default () => {
+export default (props) => {
 	const [wallets, setWallets] = createSignal([]);
 
 	const listener = (event) => {
@@ -27,7 +27,9 @@ export default () => {
 		<For each={wallets()}>
 			{(wallet) => <>
 				<div style="max-width: 400px;" class="cursor-pointer select-none">
-					<div class="group bg-gray-100 rounded-2xl p-6 border border-gray-200">
+					<div class="group bg-gray-100 rounded-2xl p-6 border border-gray-200" onClick={() => {
+						props?.onSelect?.(wallet);
+					}}>
 						<div class="flex">
 							<img src={wallet.info.icon} style="width: 24px; height: 24px;" class="mr-4"/>
 							<p class="font-bold"> {wallet.info.name} </p>
