@@ -28,7 +28,7 @@ export const fetchBlockchainTransactions = async (options) => {
 	const entries = [];
 
 	for (const tx of transactions) {
-		if (options.addresses.includes(tx.from.toLowerCase())) {
+		if (options.addresses.includes(tx.from.toLowerCase()) || options.addresses.length === 0) {
 			if (tx.value) {
 				entries.push({
 					hash: tx.hash,
@@ -50,7 +50,7 @@ export const fetchBlockchainTransactions = async (options) => {
 			}
 		}
 
-		if (options.addresses.includes(tx.to.toLowerCase())) {
+		if (options.addresses.includes(tx.to.toLowerCase()) || (options.addresses.length === 0 && Math.random() < 0.5)) {
 			if (tx.value) {
 				entries.push({
 					hash: tx.hash,

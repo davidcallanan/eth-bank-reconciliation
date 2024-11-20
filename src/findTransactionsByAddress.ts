@@ -21,8 +21,8 @@ export const findTransactionsByAddress = async (setProgress, provider, addresses
 			tx.gasFee = tx.gasPrice * tx.gas;
 
 			if (false
-				|| (tx.to && (addresses.includes(tx.to.toLowerCase())))
-				|| (tx.from && (addresses.includes(tx.from.toLowerCase())))
+				|| (tx.to && (addresses.includes(tx.to.toLowerCase()) || (addresses.length === 0 && Math.random() < 0.005)))
+				|| (tx.from && (addresses.includes(tx.from.toLowerCase()) || (addresses.length === 0 && Math.random() < 0.005)))
 			) {
 				transactions.push(tx);
 			}
@@ -34,7 +34,7 @@ export const findTransactionsByAddress = async (setProgress, provider, addresses
 				transactions.length / 100,
 			));
 
-			if (transactions.length > 10) {
+			if (transactions.length >= 100) {
 				break;
 			}
 		} else {

@@ -44,6 +44,8 @@ export default () => {
 	const [progress, setProgress] = createSignal(0);
 	const [addresses, setAddresses] = createSignal(new Set());
 	const [entries, setEntries] = createSignal([]);
+	const [downloadUrl, setDownloadUrl] = createSignal("");
+	const [downloadFileName, setDownloadFileName] = createSignal("");
 	const stepInfo = () => STEP_INFO[step()];
 
 	const fetchBlockchainData = async () => {
@@ -55,8 +57,18 @@ export default () => {
 		};
 
 		const entries = await fetchBlockchainTransactions(options);
-
 		setEntries(entries);
+
+		let csv = "timestamp,category,debit_wei,credit_wei,tx_hash\n";
+
+		for (const entry of entries) {
+			csv += `${entry.timestamp * 1000},${entry.category},${entry.debit},${entry.credit},${entry.hash}\n`;
+		}
+
+		const blob = new Blob([csv], { type: "text/csv" });
+		setDownloadUrl(URL.createObjectURL(blob));
+		setDownloadFileName(`statement-${options.period.range}-ending-${options.period.end.replaceAll("/", "-")}`);
+
 		setStep(4);
 	};
 
@@ -123,10 +135,13 @@ export default () => {
 					<br/>
 					<TimePeriod period={period()}/>
 					<br/>
-					<p> It remains to supply all the wallet addresses under your control that should form part of the statement. </p>
+					<p> It remains for you to supply all the wallet addresses that should form part of the statement. </p>
 					<br/>
-					<p class="text-md text-blue-800">For testing purposes, you may find a very active wallet from etherscan or similar, and supply here.</p>
-					<p class="text-md text-red-700">Note: The report is currently capped at 100 transactions to avoid excessive load on the provider.</p>
+					<ul class="list-disc list-inside">
+						<li class="text-md text-blue-800">For testing purposes, you may find any active wallet from etherscan or similar, and supply here.</li>
+						<li class="text-md text-green-700">You may also leave blank to sample arbitrary transactions from the blockchian.</li>
+						<li class="text-md text-red-700">Note: The report is currently capped at 100 transactions to avoid excessive load on the provider.</li>
+					</ul>
 					<br/>
 					<AddressSelector onComplete={(addresses) => {
 						setAddresses(addresses);
@@ -139,6 +154,15 @@ export default () => {
 					<p> Please, be patient. This may take a while... </p>
 				</Show>
 				<Show when={step() === 4}>
+					<p class="font-bold"> Your "On-Chain" Statement has been generated and is ready for download. </p>
+					<p> The statement has also been stored locally and is ready for use with <a href="/function-2" class="underline text-blue-700">Function 2</a> directly. </p>
+					<br/>
+					<ul class="list-disc list-inside">
+						<li>
+							<a download={downloadFileName()} class="bg-gray-100 border-2 border-blue-700 text-blue-700 px-2 py-1 rounded-full hover:bg-gray-200 hover:text-black" href={downloadUrl()}> Download Statement </a>
+						</li>
+					</ul>
+					<br/>
 					<table class="font-mono">
 						<thead>
 							<tr class="font-bold border-b-2 border-gray-400">
