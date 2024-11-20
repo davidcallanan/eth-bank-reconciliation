@@ -21,7 +21,21 @@ const STEP_INFO = [
 		type: "loading",
 		name: "Fetching information from blockchain...",
 	},
+	{
+		name: "Step 4. Save \"On-Chain\" Statement",
+	},
 ];
+
+const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
 
 export default () => {
 	const [step, setStep] = createSignal(0);
@@ -29,6 +43,7 @@ export default () => {
 	const [period, setPeriod] = createSignal();
 	const [progress, setProgress] = createSignal(0);
 	const [addresses, setAddresses] = createSignal(new Set());
+	const [entries, setEntries] = createSignal([]);
 	const stepInfo = () => STEP_INFO[step()];
 
 	const fetchBlockchainData = async () => {
@@ -39,8 +54,10 @@ export default () => {
 			setProgress,
 		};
 
-		const result = await fetchBlockchainTransactions(options);
-		console.log(result);
+		const entries = await fetchBlockchainTransactions(options);
+
+		setEntries(entries);
+		setStep(4);
 	};
 
 	return <>
@@ -108,6 +125,9 @@ export default () => {
 					<br/>
 					<p> It remains to supply all the wallet addresses under your control that should form part of the statement. </p>
 					<br/>
+					<p class="text-md text-blue-800">For testing purposes, you may find a very active wallet from etherscan or similar, and supply here.</p>
+					<p class="text-md text-red-700">Note: The report is currently capped at 100 transactions to avoid excessive load on the provider.</p>
+					<br/>
 					<AddressSelector onComplete={(addresses) => {
 						setAddresses(addresses);
 						setStep(3);
@@ -117,6 +137,32 @@ export default () => {
 				<Show when={step() === 3}>
 					<p> Progress: <b>{(progress() * 100).toFixed(0)}%</b></p>
 					<p> Please, be patient. This may take a while... </p>
+				</Show>
+				<Show when={step() === 4}>
+					<table class="font-mono">
+						<thead>
+							<tr class="font-bold border-b-2 border-gray-400">
+								<th>Timestamp</th>
+								<th>Category</th>
+								<th>Debit</th>
+								<th>Credit</th>
+								<th>TX Hash</th>
+							</tr>
+						</thead>
+						<tbody>
+							<For each={entries()}>
+								{(entry) => (
+									<tr>
+										<td class="px-2 py-1">{formatDate(new Date(entry.timestamp * 1000))}</td>
+										<td class="px-2 py-1">{entry.category}</td>
+										<td class="px-2 py-1">{(Number(entry.debit) / 1000000000000000000).toFixed(6)} ETH</td>
+										<td class="px-2 py-1">{(Number(entry.credit) / 1000000000000000000).toFixed(6)} ETH</td>
+										<td class="px-2 py-1">{entry.hash.substring(0, 6)}..{entry.hash.substring(entry.hash.length - 4, entry.hash.length)}</td>
+									</tr>
+								)}
+							</For>
+						</tbody>
+					</table>
 				</Show>
 			</div>
 		</div>

@@ -13,6 +13,13 @@ export const findTransactionsByAddress = async (setProgress, provider, addresses
         });
 
 		for (const tx of block.transactions) {
+			// This may not be up-to-date with modern gas calculation?
+			tx.timestamp = parseInt(block.timestamp, 16);
+			tx.value = tx.value ? BigInt(tx.value, 16) : tx.value;
+			tx.gasPrice = tx.gasPrice ? BigInt(tx.gasPrice, 16) : tx.gasPrice;
+			tx.gas = tx.gas ? BigInt(tx.gas, 16) : tx.gas;
+			tx.gasFee = tx.gasPrice * tx.gas;
+
 			if (false
 				|| (tx.to && (addresses.includes(tx.to.toLowerCase())))
 				|| (tx.from && (addresses.includes(tx.from.toLowerCase())))
@@ -27,7 +34,7 @@ export const findTransactionsByAddress = async (setProgress, provider, addresses
 				transactions.length / 100,
 			));
 
-			if (transactions.length > 100) {
+			if (transactions.length > 10) {
 				break;
 			}
 		} else {
