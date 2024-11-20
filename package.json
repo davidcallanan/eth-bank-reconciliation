@@ -6,7 +6,8 @@
 		"start": "vite",
 		"dev": "vite",
 		"build": "vite build",
-		"serve": "vite preview"
+		"serve": "vite preview",
+		"deploy": "pnpm run build && firebase deploy --only hosting:evm-bank-reconciliation"
 	},
 	"devDependencies": {
 		"autoprefixer": "^10.4.19",

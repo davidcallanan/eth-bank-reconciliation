@@ -1,0 +1,11 @@
+{
+	"hosting": {
+		"site": "evm-bank-reconciliation",
+		"public": "public",
+		"ignore": [
+			"firebase.json",
+			"**/.*",
+			"**/node_modules/**"
+		]
+	}
+}
