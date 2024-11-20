@@ -82,7 +82,7 @@ export default () => {
 				<p class="text-gray-600 pt-4 text-sm">
 					This function generates on "on-chain statement" (analogous to a
 					bank statement) from a live blockchain. You can connect up
-					to your EVM wallet provider and select any ERC20 token of interest.
+					to your EVM wallet for any EVM-compatible blockchain.
 					You can then supply as many wallet addresses as you like and choose
 					a time period for which the statement should be generated.
 					The statement can then be downloaded or can be brought to "Function 2" directly.

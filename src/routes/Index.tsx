@@ -15,10 +15,10 @@ const Index: Component = () => {
 					<div class="flex flex-col items-center bg-red-50 hover:bg-red-100 border-2 border-gray-400 px-8 py-6 rounded-2xl group hover:bg-gray-100 hover:border-gray-500">
 						<img src="/src/assets/function-1.png" class="block w-8 h-8 mb-4"/>
 						<h2 class="text-blue-800 text-center text-lg font-bold group-hover:underline"> Function 1. Generate "On-Chain" Statement </h2>
-						<p class="text-gray-600 pt-4 text-sm">
+						<p class="text-gray-600 pt-4 text-sm">	
 							This function generates on "on-chain statement" (analogous to a
 							bank statement) from a live blockchain. You can connect up
-							to your EVM wallet provider and select any ERC20 token of interest.
+							to your EVM wallet for any EVM-compatible blockchain.
 							You can then supply as many wallet addresses as you like and choose
 							a time period for which the statement should be generated.
 							The statement can then be downloaded or can be brought to "Function 2" directly.

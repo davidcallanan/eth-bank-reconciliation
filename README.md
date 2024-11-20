@@ -33,3 +33,39 @@ The project can be viewed live at [].
  - Support could be added for non-EVM blockchains.
  - One could support beyond just the native token of the blockchain, and consider ERC20 tokens or more complex transactions.
  - One could support simultaneous combination with other bank statements, and allow for an all-encompassing reconciliation process.
+
+## Screenshots
+
+### Home Page
+
+![](images/home.png)
+
+### Function 1
+
+**Step 1. Connect to Wallet Provider**
+
+![](images/function-1-connect-wallet.png)
+
+**Step 2. Configure Time Period**
+
+![](images/function-1-time-period.png)
+
+**Step 3. Supply Wallet Addresses**
+
+![](images/function-1-addresses.png)
+
+**Wait. Fetching information from blockchain**
+
+![](images/function-1-fetching.png)
+
+**Step 4. Save "On-Chain" Statement**
+
+![](images/function-1-download.png)
+
+**Downloaded CSV File**
+
+![](images/function-1-csv.png)
+
+### Function 2
+
+This function is currently under development.
